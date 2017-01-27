@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +11,6 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
 	public void onEvent(CustomMessageEvent event) {
 		Log.d("Log", "Event is on");
 		if (event.isToken) {
-			getSupportFragmentManager().beginTransaction().add(R.id.frame_container, new FriendsList(), "").commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, new FriendsList(), "").commit();
 			Toast.makeText(this, "friends list", Toast.LENGTH_LONG).show();
 		} else {
-			getSupportFragmentManager().beginTransaction().add(R.id.web_view, new WebViewFragment(), "").commit();
-			setContentView(R.layout.recycle_view);
+			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, new WebViewFragment(), "").commit();
+			setContentView(R.layout.web_view);
 			Toast.makeText(this, "authorisation", Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -65,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 //	}
 
 //	private void initializeAdapter(List<Person> persons){
-//		RVAdapter adapter = new RVAdapter(persons);
+//		RecycleViewAdapter adapter = new RecycleViewAdapter(persons);
 //		recyclerView.setAdapter(adapter);
 //	}
 }

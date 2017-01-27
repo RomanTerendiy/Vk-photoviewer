@@ -12,17 +12,15 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/frame_container">
+    android:id="@+id/activity_main_id">
 
 </FrameLayout>
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:layout_height="match_parent"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:id="@+id/recycle_view"-->
+        <!--android:id="@+id/recycler_view"-->
         <!--&gt;-->
-
     <!--</android.support.v7.widget.RecyclerView>-->
-
     <Button
         android:text="Log in"
         android:layout_width="wrap_content"

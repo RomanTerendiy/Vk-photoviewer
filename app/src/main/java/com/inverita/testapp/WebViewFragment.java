@@ -32,7 +32,7 @@ public class WebViewFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container,
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.web_view, container, false);
-		mWebView = (WebView) view.findViewById(R.id.web_view);
+		mWebView = (WebView) view.findViewById(R.id.web_view_id);
 		mWebView.loadUrl(defaultUrl);
 		mWebView.setWebViewClient(new WebViewClient() {
 
@@ -80,7 +80,7 @@ public class WebViewFragment extends Fragment {
 					editor.putString("ExpiresInKey", expiresIn);
 					editor.putString("UserIdKey", userId);
 					editor.apply();
-				} else {Log.d("error", "token is not writen to editor");}
+				} else {Log.d("log", "token is not writen to editor");}
 			}
 		});
 		return view;

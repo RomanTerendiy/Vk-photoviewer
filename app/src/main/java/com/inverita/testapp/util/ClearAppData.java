@@ -1,4 +1,4 @@
-package com.inverita.testapp;
+package com.inverita.testapp.util;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,7 +15,7 @@ public class ClearAppData {
 			String[] children = appDir.list();
 			for (String child : children) {
 				File file = new File(appDir, child);
-				if(deleteDir(file))
+				if (deleteDir(file))
 					Log.d("TagData", String.format("DELETED -> (%child)", file.getAbsolutePath()));
 			}
 		}

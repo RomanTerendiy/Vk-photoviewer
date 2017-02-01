@@ -1,13 +1,13 @@
-package com.inverita.testapp;
+package com.inverita.testapp.event;
 
 public class CustomMessageEvent {
 
-	boolean isToken;
+	private boolean isToken;
 
 	public CustomMessageEvent() {
 	}
 
-	public boolean isToken() {
+	public boolean hasToken() {
 		return isToken;
 	}
 

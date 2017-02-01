@@ -1,10 +1,11 @@
-package com.inverita.testapp;
+package com.inverita.testapp.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,12 +16,19 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.inverita.testapp.event.CustomMessageEvent;
+import com.inverita.testapp.R;
+
 import org.greenrobot.eventbus.EventBus;
 
 public class WebViewFragment extends Fragment {
 
 	private final String defaultUrl = "https://oauth.vk.com/authorize?client_id=5826840&display=page&redirect_uri=" +
 			"https://oauth.vk.com/blank.html/callback&scope=friends&response_type=token&v=5.62&state=123456";
+	private static final String ARG_REDIRECT_URL = "token";
+	private static final String ARG_TOKEN = "token";
+	private static final String ARG_EXPIRES_IN = "expiresIn";
+	private static final String ARG_USER_ID = "userId";
 	private String redirectUrl;
 	private String token;
 	private String expiresIn;
@@ -28,6 +36,28 @@ public class WebViewFragment extends Fragment {
 	private SharedPreferences sPref;
 	private WebView mWebView;
 	private CustomMessageEvent event;
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null) {
+			redirectUrl = savedInstanceState.getString(ARG_REDIRECT_URL);
+			token = savedInstanceState.getString(ARG_TOKEN);
+			expiresIn = savedInstanceState.getString(ARG_EXPIRES_IN);
+			userId = savedInstanceState.getString(ARG_USER_ID);
+
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString(ARG_REDIRECT_URL, redirectUrl);
+		outState.putString(ARG_TOKEN, token);
+		outState.putString(ARG_EXPIRES_IN, expiresIn);
+		outState.putString(ARG_USER_ID, userId);
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container,
 							 Bundle savedInstanceState) {
@@ -60,11 +90,7 @@ public class WebViewFragment extends Fragment {
 					userId = uri.getQueryParameter("user_id");
 					//Post the fragment event
 					event = new CustomMessageEvent();
-					if (token != null) {
-						event.isToken = true;
-					} else {
-						event.isToken = false;
-					}
+					event.setToken(token != null);
 					saveParameters(token, expiresIn, userId);
 					EventBus.getDefault().post(event);
 				}
@@ -80,7 +106,9 @@ public class WebViewFragment extends Fragment {
 					editor.putString("ExpiresInKey", expiresIn);
 					editor.putString("UserIdKey", userId);
 					editor.apply();
-				} else {Log.d("log", "token is not writen to editor");}
+				} else {
+					Log.d("log", "token is not writen to editor");
+				}
 			}
 		});
 		return view;

@@ -20,9 +20,9 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 	public static class PersonViewHolder extends RecyclerView.ViewHolder {
 
 		CardView cardView;
-		TextView friendsName;
-		TextView friendsLastName;
-		ImageView friendsPhoto;
+		private TextView friendsName;
+		private TextView friendsLastName;
+		private ImageView friendsPhoto;
 
 		PersonViewHolder(View itemView) {
 			super(itemView);

@@ -24,16 +24,12 @@ import retrofit2.Response;
 
 public class FriendsListFragment extends Fragment {
 
-	RecyclerView recyclerView;
-	List<Friend> friends;
+	private RecyclerView recyclerView;
+	private List<Friend> friends;
 	private VkServiceInterface vkServiceInterface;
-
-	public FriendsListFragment() {
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 		View layout = inflater.inflate(R.layout.recycler_view, container, false);
 		recyclerView = (RecyclerView) layout.findViewById(R.id.recycler_view_id);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -50,22 +46,15 @@ public class FriendsListFragment extends Fragment {
 			public void onResponse(Call<FriendsList> call, Response<FriendsList> friendsListResponse) {
 				FriendsList friendsList = new FriendsList();
 				friends = friendsListResponse.body().getResponse();
-				Log.d("Log", "vkService = " + friends);
 				friendsList.setResponse(friends);
-				//temp
-				for (Friend friend : friendsList.getResponse()) {
-					Log.d("Log", "vkFriendId = " + friend);
-				}
 				RecycleViewAdapter adapter = new RecycleViewAdapter(getActivity(), friends);
 				adapter.notifyDataSetChanged();
 				recyclerView.setAdapter(adapter);
 			}
-
 			@Override
 			public void onFailure(Call<FriendsList> call, Throwable t) {
 				Log.d("Log", "failed to get friendsListId");
 			}
 		});
 	}
-
 }

@@ -4,15 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Friend {
-	public Friend() {
-	}
-
-	public Friend(Integer userId, String photo50, String firstName, String lastName) {
-		this.userId = userId;
-		this.photo50 = photo50;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
 
 	@SerializedName("uid")
 	@Expose

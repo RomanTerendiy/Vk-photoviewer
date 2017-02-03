@@ -15,30 +15,34 @@ import com.inverita.testapp.R;
 
 import java.util.List;
 
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.PersonViewHolder> {
+public class FriendsListRecycleViewAdapter extends RecyclerView.Adapter<FriendsListRecycleViewAdapter.PersonViewHolder> {
+
+	private Context context;
+	private List<Friend> friends;
+	private OnFriendClick onFriendClick;
+
+	public FriendsListRecycleViewAdapter(Context context, List<Friend> friends, OnFriendClick onFriendClick) {
+		this.friends = friends;
+		this.context = context;
+		this.onFriendClick = onFriendClick;
+	}
+
+	public interface OnFriendClick {
+		void onFriendClick(int id);
+	}
 
 	public static class PersonViewHolder extends RecyclerView.ViewHolder {
-
 		CardView cardView;
 		private TextView friendsName;
 		private TextView friendsLastName;
 		private ImageView friendsPhoto;
-
 		PersonViewHolder(View itemView) {
 			super(itemView);
-			cardView = (CardView) itemView.findViewById(R.id.card_view_id);
+			cardView = (CardView) itemView.findViewById(R.id.friends_list_view_id);
 			friendsName = (TextView) itemView.findViewById(R.id.friends_name);
 			friendsLastName = (TextView) itemView.findViewById(R.id.friends_last_name);
 			friendsPhoto = (ImageView) itemView.findViewById(R.id.friends_photo);
 		}
-	}
-
-	private Context context;
-	private List<Friend> friends;
-
-	public RecycleViewAdapter(Context context, List<Friend> friends) {
-		this.friends = friends;
-		this.context = context;
 	}
 
 	@Override
@@ -48,18 +52,24 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
 	@Override
 	public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view, viewGroup, false);
+		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.friends_list_view, viewGroup, false);
 		PersonViewHolder pvh = new PersonViewHolder(v);
 		return pvh;
 	}
 
 	@Override
-	public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
+	public void onBindViewHolder(PersonViewHolder personViewHolder,final int i) {
 		personViewHolder.friendsName.setText(friends.get(i).getFirstName());
 		personViewHolder.friendsLastName.setText(friends.get(i).getLastName());
 		Glide.with(context)
 				.load(friends.get(i).getPhoto50())
 				.into(personViewHolder.friendsPhoto);
+		personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onFriendClick.onFriendClick(friends.get(i).getUserId());
+			}
+		});
 	}
 
 	@Override

@@ -10,11 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.inverita.testapp.ApiClient;
+import com.inverita.testapp.R;
+import com.inverita.testapp.model.AlbumsList;
 import com.inverita.testapp.model.Friend;
 import com.inverita.testapp.model.FriendsList;
-import com.inverita.testapp.R;
 import com.inverita.testapp.retrofitInterface.VkServiceInterface;
-import com.inverita.testapp.view.adapter.RecycleViewAdapter;
+import com.inverita.testapp.view.adapter.FriendsListRecycleViewAdapter;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendsListFragment extends Fragment {
+public class FriendsListFragment extends Fragment implements FriendsListRecycleViewAdapter.OnFriendClick {
 
 	private RecyclerView recyclerView;
 	private List<Friend> friends;
@@ -40,14 +41,14 @@ public class FriendsListFragment extends Fragment {
 
 	private void getMyFriends() {
 		vkServiceInterface = ApiClient.getClient().create(VkServiceInterface.class);
-		Call<FriendsList> callFriendsId = vkServiceInterface.getFriends();
+		final Call<FriendsList> callFriendsId = vkServiceInterface.getFriends();
 		callFriendsId.enqueue(new Callback<FriendsList>() {
 			@Override
 			public void onResponse(Call<FriendsList> call, Response<FriendsList> friendsListResponse) {
 				FriendsList friendsList = new FriendsList();
 				friends = friendsListResponse.body().getResponse();
 				friendsList.setResponse(friends);
-				RecycleViewAdapter adapter = new RecycleViewAdapter(getActivity(), friends);
+				FriendsListRecycleViewAdapter adapter = new FriendsListRecycleViewAdapter(getActivity(), friends, FriendsListFragment.this);
 				adapter.notifyDataSetChanged();
 				recyclerView.setAdapter(adapter);
 			}
@@ -56,5 +57,17 @@ public class FriendsListFragment extends Fragment {
 				Log.d("Log", "failed to get friendsListId");
 			}
 		});
+	}
+
+
+
+	@Override
+	public void onFriendClick(int id) {
+		Log.d("Log", "onFriendClick");
+		AlbumListFragment albumListFragment = new AlbumListFragment();
+		Bundle bundle = new Bundle();
+		bundle.putInt("friendId", id);
+		albumListFragment.setArguments(bundle);
+		getFragmentManager().beginTransaction().replace(R.id.activity_main, albumListFragment, "").commit();
 	}
 }

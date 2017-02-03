@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.R;
@@ -57,6 +58,11 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 				AlbumsListRecycleViewAdapter adapter = new AlbumsListRecycleViewAdapter(getActivity(), albums, AlbumsListFragment.this);
 				adapter.notifyDataSetChanged();
 				recyclerView.setAdapter(adapter);
+				if (albums.size() == 0) {
+					Toast.makeText(getActivity(), "albums list is empty", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity(), "albums list", Toast.LENGTH_SHORT).show();
+				}
 			}
 			@Override
 			public void onFailure(Call<AlbumsList> call, Throwable t) {

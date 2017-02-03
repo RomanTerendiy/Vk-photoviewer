@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 		Log.d("Log", "Event is on");
 		if (event.hasToken()) {
 			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, new FriendsListFragment(), "").commit();
-			Toast.makeText(this, "friends list", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "friends list", Toast.LENGTH_SHORT).show();
 		} else {
 			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, new WebViewFragment(), "").commit();
 			setContentView(R.layout.web_view);

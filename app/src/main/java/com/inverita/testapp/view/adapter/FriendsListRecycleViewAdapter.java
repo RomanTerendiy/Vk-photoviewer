@@ -18,11 +18,11 @@ import java.util.List;
 public class FriendsListRecycleViewAdapter extends RecyclerView.Adapter<FriendsListRecycleViewAdapter.PersonViewHolder> {
 
 	private Context context;
-	private List<Friend> friends;
+	private List<Friend> friendsList;
 	private OnFriendClick onFriendClick;
 
 	public FriendsListRecycleViewAdapter(Context context, List<Friend> friends, OnFriendClick onFriendClick) {
-		this.friends = friends;
+		this.friendsList = friends;
 		this.context = context;
 		this.onFriendClick = onFriendClick;
 	}
@@ -36,6 +36,7 @@ public class FriendsListRecycleViewAdapter extends RecyclerView.Adapter<FriendsL
 		private TextView friendsName;
 		private TextView friendsLastName;
 		private ImageView friendsPhoto;
+
 		PersonViewHolder(View itemView) {
 			super(itemView);
 			cardView = (CardView) itemView.findViewById(R.id.friends_list_view_id);
@@ -58,22 +59,22 @@ public class FriendsListRecycleViewAdapter extends RecyclerView.Adapter<FriendsL
 	}
 
 	@Override
-	public void onBindViewHolder(PersonViewHolder personViewHolder,final int i) {
-		personViewHolder.friendsName.setText(friends.get(i).getFirstName());
-		personViewHolder.friendsLastName.setText(friends.get(i).getLastName());
+	public void onBindViewHolder(PersonViewHolder personViewHolder, final int i) {
+		personViewHolder.friendsName.setText(friendsList.get(i).getFirstName());
+		personViewHolder.friendsLastName.setText(friendsList.get(i).getLastName());
 		Glide.with(context)
-				.load(friends.get(i).getPhoto50())
+				.load(friendsList.get(i).getPhoto50())
 				.into(personViewHolder.friendsPhoto);
 		personViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onFriendClick.onFriendClick(friends.get(i).getUserId());
+				onFriendClick.onFriendClick(friendsList.get(i).getUserId());
 			}
 		});
 	}
 
 	@Override
 	public int getItemCount() {
-		return friends.size();
+		return friendsList.size();
 	}
 }

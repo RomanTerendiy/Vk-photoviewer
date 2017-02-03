@@ -1,4 +1,4 @@
-package com.inverita.testapp;
+package com.inverita.testapp.util;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

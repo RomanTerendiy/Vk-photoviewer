@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout android:id="@+id/albums_list_id"
+<GridLayout android:id="@+id/photos_list_id"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:columnCount="2">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,20 +12,12 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/album_cover"
+            android:id="@+id/album_photo_id"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="16dp" />
-
-        <TextView
-            android:id="@+id/album_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/album_cover"
-            android:layout_gravity="center_horizontal"
-            android:textSize="15sp" />
 
     </RelativeLayout>
 </GridLayout>

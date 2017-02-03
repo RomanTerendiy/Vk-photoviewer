@@ -9,9 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.inverita.testapp.ApiClient;
+import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.R;
-import com.inverita.testapp.model.AlbumsList;
 import com.inverita.testapp.model.Friend;
 import com.inverita.testapp.model.FriendsList;
 import com.inverita.testapp.retrofitInterface.VkServiceInterface;
@@ -59,12 +58,10 @@ public class FriendsListFragment extends Fragment implements FriendsListRecycleV
 		});
 	}
 
-
-
 	@Override
 	public void onFriendClick(int id) {
 		Log.d("Log", "onFriendClick");
-		AlbumListFragment albumListFragment = new AlbumListFragment();
+		AlbumsListFragment albumListFragment = new AlbumsListFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("friendId", id);
 		albumListFragment.setArguments(bundle);

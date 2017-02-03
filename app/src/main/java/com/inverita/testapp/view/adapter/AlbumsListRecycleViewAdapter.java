@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.inverita.testapp.R;
+import com.inverita.testapp.fragment.AlbumsListFragment;
 import com.inverita.testapp.model.Album;
 
 import java.util.List;
@@ -19,17 +20,24 @@ import java.util.List;
 public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsListRecycleViewAdapter.AlbumsViewHolder> {
 
 	private Context context;
-	private List<Album> albumList;
+	private List<Album> albumsList;
+	private OnAlbumClick onAlbumClick;
 
-	public AlbumsListRecycleViewAdapter(Context context, List<Album> albumList) {
-		this.albumList = albumList;
+	public AlbumsListRecycleViewAdapter(Context context, List<Album> albumList, OnAlbumClick onAlbumClick) {
+		this.albumsList = albumList;
 		this.context = context;
+		this.onAlbumClick = onAlbumClick;
+	}
+
+	public interface OnAlbumClick {
+		void onAlbumClick(int owner_id);
 	}
 
 	public static class AlbumsViewHolder extends RecyclerView.ViewHolder {
 		GridLayout gridLayout;
-		TextView albumName;
-		ImageView albumCover;
+		private TextView albumName;
+		private ImageView albumCover;
+
 		AlbumsViewHolder(View itemView) {
 			super(itemView);
 			gridLayout = (GridLayout) itemView.findViewById(R.id.albums_list_id);
@@ -51,16 +59,22 @@ public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsLis
 	}
 
 	@Override
-	public void onBindViewHolder(AlbumsListRecycleViewAdapter.AlbumsViewHolder albumsViewHolder, int i) {
-		albumsViewHolder.albumName.setText(albumList.get(i).getTitle());
-		Log.d("Log", "albumList = " + albumList.get(i).getThumbSrc() );
+	public void onBindViewHolder(AlbumsListRecycleViewAdapter.AlbumsViewHolder albumsViewHolder, final int i) {
+		albumsViewHolder.albumName.setText(albumsList.get(i).getTitle());
+		Log.d("Log", "albumsList = " + albumsList.get(i).getThumbSrc());
 		Glide.with(context)
-				.load(albumList.get(i).getThumbSrc())
+				.load(albumsList.get(i).getThumbSrc())
 				.into(albumsViewHolder.albumCover);
+		albumsViewHolder.gridLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onAlbumClick.onAlbumClick(albumsList.get(i).getAid());
+			}
+		});
 	}
 
 	@Override
 	public int getItemCount() {
-		return albumList.size();
+		return albumsList.size();
 	}
 }

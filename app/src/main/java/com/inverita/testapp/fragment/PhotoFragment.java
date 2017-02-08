@@ -27,9 +27,10 @@ public class PhotoFragment extends Fragment {
 	private VkServiceInterface vkServiceInterface;
 	private ViewPager viewPager;
 	private List<Photo> photos;
-	private Integer friendId;
-	private Integer albumId;
-	private Integer photoId;
+	private int friendId;
+	private int albumId;
+	private int photoId;
+	private int position;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class PhotoFragment extends Fragment {
 		friendId = bundle.getInt("friendId");
 		albumId = bundle.getInt("albumId");
 		photoId = bundle.getInt("photoId");
+		position = bundle.getInt("position");
 		viewPager = (ViewPager) layout.findViewById(R.id.pager);
 		getFriendsPhoto();
 		return layout;
@@ -45,16 +47,18 @@ public class PhotoFragment extends Fragment {
 
 	private void getFriendsPhoto() {
 		vkServiceInterface = ApiClient.getClient().create(VkServiceInterface.class);
-		final Call<PhotosList> callPhotos = vkServiceInterface.getPhoto(friendId, albumId, photoId);
+		final Call<PhotosList> callPhotos = vkServiceInterface.getPhotos(friendId, albumId);
 		callPhotos.enqueue(new Callback<PhotosList>() {
 			@Override
 			public void onResponse(Call<PhotosList> call, Response<PhotosList> friendsListResponse) {
 				PhotosList photosList = new PhotosList();
 				photos = friendsListResponse.body().getResponse();
+				Log.d("Logos", "PHOTOS = " + photos.size());
 				photosList.setResponse(photos);
 				PhotoAdapter photoAdapter = new PhotoAdapter(getActivity(), photos);
-				photoAdapter.notifyDataSetChanged();
 				viewPager.setAdapter(photoAdapter);
+				viewPager.setCurrentItem(position);
+				photoAdapter.notifyDataSetChanged();
 			}
 			@Override
 			public void onFailure(Call<PhotosList> call, Throwable t) {

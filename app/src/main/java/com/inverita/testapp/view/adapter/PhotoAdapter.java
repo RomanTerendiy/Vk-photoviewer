@@ -39,9 +39,11 @@ public class PhotoAdapter extends PagerAdapter {
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
+
 			View itemView = mLayoutInflater.inflate(R.layout.photo_layout, container, false);
 			ImageView imageView = (ImageView) itemView.findViewById(R.id.photo_id);
 			Log.d("Log", "image Glie = " + photos.get(position).getSrc());
+			Log.d("ggg", "image Glie = " + position);
 			Glide.with(mContext)
 					.load(photos.get(position).getSrc())
 					.into(imageView);

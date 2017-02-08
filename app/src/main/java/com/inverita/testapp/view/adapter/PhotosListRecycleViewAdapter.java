@@ -31,7 +31,7 @@ public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosLis
 	}
 
 	public interface OnPhotoClick {
-		void onPhotoClick(int friendId, int albumId, int photoId);
+		void onPhotoClick(int friendId, int albumId, int photoId, int position);
 	}
 
 	public static class PhotosViewHolder extends RecyclerView.ViewHolder {
@@ -66,7 +66,7 @@ public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosLis
 		photosViewHolder.gridLayout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onPhotoClick.onPhotoClick(photosList.get(i).getOwnerId(), photosList.get(i).getAid(), photosList.get(i).getPid());
+				onPhotoClick.onPhotoClick(photosList.get(i).getOwnerId(), photosList.get(i).getAid(), photosList.get(i).getPid(), i);
 				Toast.makeText(context, "photo", Toast.LENGTH_SHORT).show();
 			}
 		});

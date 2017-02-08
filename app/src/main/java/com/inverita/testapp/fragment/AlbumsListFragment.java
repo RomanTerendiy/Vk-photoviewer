@@ -30,7 +30,7 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 	private RecyclerView recyclerView;
 	private VkServiceInterface vkServiceInterface;
 	private List<Album> albums;
-	private Integer friendId;
+	private int friendId;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -69,12 +69,13 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 	}
 
 	@Override
-	public void onPhotoClick(int friendId, int albumId, int photoId) {
+	public void onPhotoClick(int friendId, int albumId, int photoId, int position) {
 		PhotoFragment photoFragment = new PhotoFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("friendId", friendId);
 		bundle.putInt("albumId", albumId);
 		bundle.putInt("photoId", photoId);
+		bundle.putInt("position", position);
 		photoFragment.setArguments(bundle);
 		getFragmentManager().beginTransaction().replace(R.id.activity_main, photoFragment, "").commit();
 	}

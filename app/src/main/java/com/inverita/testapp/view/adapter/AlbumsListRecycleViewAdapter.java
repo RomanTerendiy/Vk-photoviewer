@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.inverita.testapp.R;
@@ -16,6 +17,8 @@ import com.inverita.testapp.fragment.AlbumsListFragment;
 import com.inverita.testapp.model.Album;
 
 import java.util.List;
+
+import static android.R.attr.id;
 
 public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsListRecycleViewAdapter.AlbumsViewHolder> {
 
@@ -54,8 +57,8 @@ public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsLis
 	@Override
 	public AlbumsListRecycleViewAdapter.AlbumsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.albums_list_view, viewGroup, false);
-		AlbumsViewHolder pvh = new AlbumsViewHolder(v);
-		return pvh;
+		AlbumsViewHolder albumsViewHolder = new AlbumsViewHolder(v);
+		return albumsViewHolder;
 	}
 
 	@Override
@@ -69,6 +72,7 @@ public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsLis
 			@Override
 			public void onClick(View v) {
 				onAlbumClick.onAlbumClick(albumsList.get(i).getAid());
+				Toast.makeText(context, "photos list", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

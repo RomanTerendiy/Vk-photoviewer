@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:focusableInTouchMode="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <Spinner
         android:id="@+id/spinnerTestToRun"
@@ -17,7 +17,7 @@
         android:id="@+id/scrollViewSettings"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/LinearLayout2"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp" >
+            android:paddingRight="16dp">
 
             <CheckBox
                 android:id="@+id/checkBoxEventBus"
@@ -88,7 +88,7 @@
                 android:id="@+id/relativeLayoutForEvents"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginBottom="18dp" >
+                android:layout_marginBottom="18dp">
 
                 <EditText
                     android:id="@+id/editTextEvent"
@@ -112,7 +112,7 @@
                 android:id="@+id/relativeLayoutForSubscribers"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginBottom="8dp" >
+                android:layout_marginBottom="8dp">
 
                 <EditText
                     android:id="@+id/editTextSubscribe"

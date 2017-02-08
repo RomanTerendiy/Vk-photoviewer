@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotosListFragment extends Fragment {
+public class PhotosListFragment extends Fragment implements PhotosListRecycleViewAdapter.OnPhotoClick {
 
 	private int NUMBER_OF_COLUMNS = 2;
 	private RecyclerView recyclerView;
@@ -52,12 +52,12 @@ public class PhotosListFragment extends Fragment {
 		final Call<PhotosList> callAlbumsId = vkServiceInterface.getPhotos(friendId, albumId);
 		callAlbumsId.enqueue(new Callback<PhotosList>() {
 			@Override
-			public void onResponse(Call<PhotosList> call, Response<PhotosList> friendsListResponse) {
-				PhotosList friendsList = new PhotosList();
-				photos = friendsListResponse.body().getResponse();
+			public void onResponse(Call<PhotosList> call, Response<PhotosList> photosListResponse) {
+				PhotosList photosList = new PhotosList();
+				photos = photosListResponse.body().getResponse();
 				Log.d("Log", "PHOTOS = " + photos.size());
-				friendsList.setResponse(photos);
-				PhotosListRecycleViewAdapter adapter = new PhotosListRecycleViewAdapter(getActivity(), photos);
+				photosList.setResponse(photos);
+				PhotosListRecycleViewAdapter adapter = new PhotosListRecycleViewAdapter(getActivity(), photos, PhotosListFragment.this);
 				adapter.notifyDataSetChanged();
 				recyclerView.setAdapter(adapter);
 			}
@@ -68,4 +68,14 @@ public class PhotosListFragment extends Fragment {
 		});
 	}
 
+	@Override
+	public void onPhotoClick(int friendId, int albumId, int photoId) {
+		PhotoFragment photoFragment = new PhotoFragment();
+		Bundle bundle = new Bundle();
+		bundle.putInt("friendId", friendId);
+		bundle.putInt("albumId", albumId);
+		bundle.putInt("photoId", photoId);
+		photoFragment.setArguments(bundle);
+		getFragmentManager().beginTransaction().replace(R.id.activity_main, photoFragment, "").commit();
+	}
 }

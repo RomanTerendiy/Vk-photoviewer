@@ -8,22 +8,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.inverita.testapp.R;
-import com.inverita.testapp.fragment.PhotosListFragment;
 import com.inverita.testapp.model.Photo;
 
 import java.util.List;
+
+import static android.R.attr.onClick;
 
 public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosListRecycleViewAdapter.PhotosViewHolder> {
 
 	private Context context;
 	private List<Photo> photosList;
+	private OnPhotoClick onPhotoClick;
 
-	public PhotosListRecycleViewAdapter(Context context, List<Photo> photosList) {
+	public PhotosListRecycleViewAdapter(Context context, List<Photo> photosList, OnPhotoClick onPhotoClick) {
 		this.photosList = photosList;
 		this.context = context;
+		this.onPhotoClick = onPhotoClick;
+	}
+
+	public interface OnPhotoClick {
+		void onPhotoClick(int friendId, int albumId, int photoId);
 	}
 
 	public static class PhotosViewHolder extends RecyclerView.ViewHolder {
@@ -55,6 +63,13 @@ public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosLis
 		Glide.with(context)
 				.load(photosList.get(i).getSrc())
 				.into(photosViewHolder.albumPhoto);
+		photosViewHolder.gridLayout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onPhotoClick.onPhotoClick(photosList.get(i).getOwnerId(), photosList.get(i).getAid(), photosList.get(i).getPid());
+				Toast.makeText(context, "photo", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	@Override

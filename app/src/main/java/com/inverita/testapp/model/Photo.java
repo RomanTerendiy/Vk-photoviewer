@@ -3,7 +3,9 @@ package com.inverita.testapp.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Photo {
+import java.io.Serializable;
+
+public class Photo implements Serializable {
 
 	@SerializedName("pid")
 	@Expose

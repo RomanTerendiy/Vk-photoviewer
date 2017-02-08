@@ -36,7 +36,6 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View layout = inflater.inflate(R.layout.recycler_view, container, false);
 		Bundle bundle = getArguments();
-		Log.d("Log", "bundle = " + bundle.getInt("friendId"));
 		friendId = bundle.getInt("friendId");
 		recyclerView = (RecyclerView) layout.findViewById(R.id.recycler_view_id);
 		recyclerView.setLayoutManager(new GridLayoutManager(getContext(), NUMBER_OF_COLUMNS));
@@ -53,7 +52,6 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 			public void onResponse(Call<AlbumsList> call, Response<AlbumsList> albumsListResponse) {
 				AlbumsList albumsList = new AlbumsList();
 				albums = albumsListResponse.body().getResponse();
-				Log.d("Log", "albumsListResponse = " + albums.size());
 				albumsList.setResponse(albums);
 				AlbumsListRecycleViewAdapter adapter = new AlbumsListRecycleViewAdapter(getActivity(), albums, AlbumsListFragment.this);
 				adapter.notifyDataSetChanged();
@@ -73,12 +71,11 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 
 	@Override
 	public void onAlbumClick(int id) {
-		Log.d("Log", "onAlbumClick");
-		PhotosListFragment albumsListFragment = new PhotosListFragment();
+		PhotosListFragment photosListFragment = new PhotosListFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("albumId", id);
 		bundle.putInt("friendId", friendId);
-		albumsListFragment.setArguments(bundle);
-		getFragmentManager().beginTransaction().replace(R.id.activity_main, albumsListFragment, "").commit();
+		photosListFragment.setArguments(bundle);
+		getFragmentManager().beginTransaction().replace(R.id.activity_main, photosListFragment, "").commit();
 	}
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/facebook_menu_item_id"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:icon="@mipmap/facebook_icon"
+        android:title="@string/facebook"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/instagram_menu_item_id"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:icon="@mipmap/instagram_icon"
+        android:title="@string/instagram"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/twitter_menu_item_id"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:icon="@mipmap/twitter_icon"
+        android:title="@string/instagram"
+        app:showAsAction="always" />
+</menu>

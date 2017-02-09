@@ -1,13 +1,17 @@
 package com.inverita.testapp.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.inverita.testapp.R;
 import com.inverita.testapp.model.Photo;
@@ -22,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhotoFragment extends Fragment {
+public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 
 	private VkServiceInterface vkServiceInterface;
 	private ViewPager viewPager;
@@ -31,10 +35,34 @@ public class PhotoFragment extends Fragment {
 	private int albumId;
 	private int photoId;
 	private int position;
+	private int photoPosition;
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.sharing_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	public void sharePhoto() {
+		Uri uri = Uri.parse(photos.get(photoPosition).getSrc());
+		Intent shareIntent = new Intent();
+		shareIntent.setAction(Intent.ACTION_SEND);
+		shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+		shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		shareIntent.setType("image/*");
+		startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_to)));
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		sharePhoto();
+		return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View layout = inflater.inflate(R.layout.photo_view, container, false);
+		setHasOptionsMenu(true);
 		Bundle bundle = getArguments();
 		friendId = bundle.getInt("friendId");
 		albumId = bundle.getInt("albumId");
@@ -55,16 +83,22 @@ public class PhotoFragment extends Fragment {
 				photos = friendsListResponse.body().getResponse();
 				Log.d("Logos", "PHOTOS = " + photos.size());
 				photosList.setResponse(photos);
-				PhotoAdapter photoAdapter = new PhotoAdapter(getActivity(), photos);
+				PhotoAdapter photoAdapter = new PhotoAdapter(getActivity(), photos, PhotoFragment.this);
 				viewPager.setAdapter(photoAdapter);
 				viewPager.setCurrentItem(position);
 				photoAdapter.notifyDataSetChanged();
 			}
+
 			@Override
 			public void onFailure(Call<PhotosList> call, Throwable t) {
 				Log.d("Log", "failed to get friendsListId");
 			}
 		});
+	}
+
+	@Override
+	public void sharePhoto(int position) {
+		photoPosition = position - 1; //fix magic number
 	}
 }
 

@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Vk photo viewer</string>
     <string name="instagram">instagram</string>
-    <string name="facebook">facebook</string>
+    <string name="sharePhoto">share photo</string>
     <string name="menu">menu</string>
-    <string name="send_to">https://www.facebook.com/profile.php?id=100001896954967</string>
-    <string name="send_to2">https://vk.com/id14025113</string>
+    <string name="share_to">Share to:</string>
 </resources>

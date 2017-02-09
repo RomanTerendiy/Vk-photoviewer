@@ -2,7 +2,6 @@ package com.inverita.testapp.view.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,42 +19,44 @@ public class PhotoAdapter extends PagerAdapter {
 	Context mContext;
 	List<Photo> photos;
 	LayoutInflater mLayoutInflater;
+	private SharePhoto sharePhoto;
 
-		public PhotoAdapter(Context context, List<Photo> photos) {
-			mContext = context;
-			this.photos = photos;
-			mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		}
+	public interface SharePhoto{
+		void sharePhoto(int position);
+	}
+	public PhotoAdapter(Context context, List<Photo> photos, SharePhoto sharePhoto) {
+		mContext = context;
+		this.photos = photos;
+		this.sharePhoto = sharePhoto;
+		mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
 
-		@Override
-		public int getCount() {
-			return photos.size();
-		}
+	@Override
+	public int getCount() {
+		return photos.size();
+	}
 
-		@Override
-		public boolean isViewFromObject(View view, Object object) {
-			return view == ((LinearLayout) object);
-		}
+	@Override
+	public boolean isViewFromObject(View view, Object object) {
+		return view == ((LinearLayout) object);
+	}
 
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
+	@Override
+	public Object instantiateItem(ViewGroup container, int position) {
 
-			View itemView = mLayoutInflater.inflate(R.layout.photo_layout, container, false);
-			ImageView imageView = (ImageView) itemView.findViewById(R.id.photo_id);
-			Log.d("Log", "image Glie = " + photos.get(position).getSrc());
-			Log.d("ggg", "image Glie = " + position);
-			Glide.with(mContext)
-					.load(photos.get(position).getSrc())
-					.into(imageView);
+		View itemView = mLayoutInflater.inflate(R.layout.photo_layout, container, false);
+		ImageView imageView = (ImageView) itemView.findViewById(R.id.photo_id);
+		Glide.with(mContext)
+				.load(photos.get(position).getSrc())
+				.into(imageView);
+		container.addView(itemView);
+		sharePhoto.sharePhoto(position);
+		return itemView;
+	}
 
-			container.addView(itemView);
+	@Override
+	public void destroyItem(ViewGroup container, int position, Object object) {
+		container.removeView((LinearLayout) object);
+	}
 
-			return itemView;
-		}
-
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			container.removeView((LinearLayout) object);
-		}
 }
-

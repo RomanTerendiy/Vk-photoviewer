@@ -77,6 +77,7 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 		bundle.putInt("photoId", photoId);
 		bundle.putInt("position", position);
 		photoFragment.setArguments(bundle);
-		getFragmentManager().beginTransaction().replace(R.id.activity_main, photoFragment, "").commit();
+		getFragmentManager().beginTransaction().replace(R.id.activity_main, photoFragment, "")
+				.addToBackStack("PhotoFragment").commit();
 	}
 }

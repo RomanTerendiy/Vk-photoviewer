@@ -7,7 +7,7 @@
         android:id="@+id/recycler_view_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/background"
+        android:background="@color/blueVk"
         android:scaleType="centerCrop" />
 
 </RelativeLayout>

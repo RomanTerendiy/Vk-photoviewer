@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,11 +30,16 @@ public class MainActivity extends AppCompatActivity {
 
 	SharedPreferences sharedPreferences;
 	Button button;
+	Toolbar toolBar;
+	WebViewFragment webViewFragment;
+	FriendsListFragment friendsListFragment;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_gradient));
 		sharedPreferences = getPreferences(Context.MODE_PRIVATE);
 		EventBus.getDefault().register(this);
 		button = (Button) findViewById(R.id.test_button);
@@ -42,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
 					@Override
 					public void onClick(View v) {
 						button.setVisibility(View.GONE);
-						getSupportFragmentManager().beginTransaction().add(R.id.activity_main, new WebViewFragment(), "").commit();
-						Toast.makeText(MainActivity.this, "authorisation", Toast.LENGTH_SHORT).show();
+						webViewFragment = new WebViewFragment();
+						getSupportFragmentManager().beginTransaction().add(R.id.activity_main, webViewFragment, "")
+								.addToBackStack("WebViewFragment").commit();
 					}
 				});
 	}
@@ -52,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
 	public void onEvent(CustomMessageEvent event) {
 		Log.d("Log", "Event is on");
 		if (event.hasToken()) {
-			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, new FriendsListFragment(), "").commit();
-			Toast.makeText(this, "friends list", Toast.LENGTH_SHORT).show();
+			friendsListFragment = new FriendsListFragment();
+			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, friendsListFragment, "")
+					.addToBackStack("FriendsListFragment").commit();
 		} else {
-			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, new WebViewFragment(), "").commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, webViewFragment, "")
+					.addToBackStack("WebViewFragment").commit();
 			setContentView(R.layout.web_view);
-			Toast.makeText(this, "authorisation", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

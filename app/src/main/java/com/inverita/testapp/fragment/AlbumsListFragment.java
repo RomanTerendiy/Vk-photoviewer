@@ -58,8 +58,6 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 				recyclerView.setAdapter(adapter);
 				if (albums.size() == 0) {
 					Toast.makeText(getActivity(), "albums list is empty", Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(getActivity(), "albums list", Toast.LENGTH_SHORT).show();
 				}
 			}
 			@Override
@@ -76,6 +74,7 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 		bundle.putInt("albumId", id);
 		bundle.putInt("friendId", friendId);
 		photosListFragment.setArguments(bundle);
-		getFragmentManager().beginTransaction().replace(R.id.activity_main, photosListFragment, "").commit();
+		getFragmentManager().beginTransaction().replace(R.id.activity_main, photosListFragment, "")
+				.addToBackStack("PhotosListFragment").commit();
 	}
 }

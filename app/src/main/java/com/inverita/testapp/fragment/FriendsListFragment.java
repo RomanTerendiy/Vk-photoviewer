@@ -65,6 +65,7 @@ public class FriendsListFragment extends Fragment implements FriendsListRecycleV
 		Bundle bundle = new Bundle();
 		bundle.putInt("friendId", id);
 		albumListFragment.setArguments(bundle);
-		getFragmentManager().beginTransaction().replace(R.id.activity_main, albumListFragment, "").commit();
+		getFragmentManager().beginTransaction().replace(R.id.activity_main, albumListFragment, "")
+				.addToBackStack("AlbumsListFragment").commit();
 	}
 }

@@ -1,6 +1,8 @@
 package com.inverita.testapp.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,6 +40,7 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 	private int photoId;
 	private int position;
 	private int photoPosition;
+	private PhotoFragment photoFragment;
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -52,6 +55,9 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 		shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		shareIntent.setType("image/*");
 		startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_to)));
+		getActivity().getSupportFragmentManager().beginTransaction()
+				.addToBackStack("PhotoFragment")
+				.commit();
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,8 +47,7 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 
 	public void sharePhoto() {
 		Uri uri = Uri.parse(photos.get(photoPosition).getSrc());
-		Intent shareIntent = new Intent();
-		shareIntent.setAction(Intent.ACTION_SEND);
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 		shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		shareIntent.setType("image/*");
@@ -81,7 +82,6 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 			public void onResponse(Call<PhotosList> call, Response<PhotosList> friendsListResponse) {
 				PhotosList photosList = new PhotosList();
 				photos = friendsListResponse.body().getResponse();
-				Log.d("Logos", "PHOTOS = " + photos.size());
 				photosList.setResponse(photos);
 				PhotoAdapter photoAdapter = new PhotoAdapter(getActivity(), photos, PhotoFragment.this);
 				viewPager.setAdapter(photoAdapter);
@@ -100,6 +100,14 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 	public void sharePhoto(int position) {
 		photoPosition = position - 1; //fix magic number
 	}
+
+	@Override
+	public void displayToolbar() {
+		ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+		if (actionBar.isShowing()) {
+			actionBar.hide();
+		} else {
+			actionBar.show();
+		}
+	}
 }
-
-

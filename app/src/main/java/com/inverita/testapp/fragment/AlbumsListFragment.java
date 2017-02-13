@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AlbumsListFragment extends Fragment implements AlbumsListRecycleViewAdapter.OnAlbumClick{
+public class AlbumsListFragment extends Fragment implements AlbumsListRecycleViewAdapter.OnAlbumClick {
 
 	private int NUMBER_OF_COLUMNS = 2;
 	private RecyclerView recyclerView;
@@ -59,6 +59,7 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 					Toast.makeText(getActivity(), "albums list is empty", Toast.LENGTH_SHORT).show();
 				}
 			}
+
 			@Override
 			public void onFailure(Call<AlbumsList> call, Throwable t) {
 				Log.d("Log", "failed to get friendsListId");

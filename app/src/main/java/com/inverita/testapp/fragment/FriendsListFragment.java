@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.R;
 import com.inverita.testapp.model.Friend;
 import com.inverita.testapp.model.FriendsList;
 import com.inverita.testapp.retrofitInterface.VkServiceInterface;
+import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.view.adapter.FriendsListRecycleViewAdapter;
 
 import java.util.List;
@@ -51,6 +51,7 @@ public class FriendsListFragment extends Fragment implements FriendsListRecycleV
 				adapter.notifyDataSetChanged();
 				recyclerView.setAdapter(adapter);
 			}
+
 			@Override
 			public void onFailure(Call<FriendsList> call, Throwable t) {
 				Log.d("Log", "failed to get friendsListId");

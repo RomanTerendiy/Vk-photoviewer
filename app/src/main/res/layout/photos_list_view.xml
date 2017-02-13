@@ -11,6 +11,6 @@
         android:id="@+id/album_photo_id"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_columnWeight="1"/>
+        android:layout_columnWeight="1" />
 
 </GridLayout>

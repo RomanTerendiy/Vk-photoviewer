@@ -16,8 +16,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.inverita.testapp.event.CustomMessageEvent;
 import com.inverita.testapp.R;
+import com.inverita.testapp.event.CustomMessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 

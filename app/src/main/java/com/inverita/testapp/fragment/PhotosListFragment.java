@@ -3,18 +3,17 @@ package com.inverita.testapp.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.R;
 import com.inverita.testapp.model.Photo;
 import com.inverita.testapp.model.PhotosList;
 import com.inverita.testapp.retrofitInterface.VkServiceInterface;
+import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.view.adapter.PhotosListRecycleViewAdapter;
 
 import java.util.List;
@@ -61,6 +60,7 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 				adapter.notifyDataSetChanged();
 				recyclerView.setAdapter(adapter);
 			}
+
 			@Override
 			public void onFailure(Call<PhotosList> call, Throwable t) {
 				Log.d("Log", "failed to get friendsListId");

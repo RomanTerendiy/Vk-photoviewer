@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.inverita.testapp.model.Friend;
 import com.inverita.testapp.R;
+import com.inverita.testapp.model.Friend;
 
 import java.util.List;
 

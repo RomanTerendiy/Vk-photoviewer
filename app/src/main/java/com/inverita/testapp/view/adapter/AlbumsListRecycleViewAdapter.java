@@ -2,23 +2,18 @@ package com.inverita.testapp.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.inverita.testapp.R;
-import com.inverita.testapp.fragment.AlbumsListFragment;
 import com.inverita.testapp.model.Album;
 
 import java.util.List;
-
-import static android.R.attr.id;
 
 public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsListRecycleViewAdapter.AlbumsViewHolder> {
 

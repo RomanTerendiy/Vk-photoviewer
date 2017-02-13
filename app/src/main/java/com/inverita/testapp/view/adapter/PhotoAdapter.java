@@ -23,6 +23,7 @@ public class PhotoAdapter extends PagerAdapter {
 
 	public interface SharePhoto {
 		void sharePhoto(int position);
+
 		void displayToolbar();
 	}
 

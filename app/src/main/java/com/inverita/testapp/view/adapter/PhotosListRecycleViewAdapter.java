@@ -59,7 +59,6 @@ public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosLis
 
 	@Override
 	public void onBindViewHolder(PhotosListRecycleViewAdapter.PhotosViewHolder photosViewHolder, final int i) {
-		Log.d("Log", "photosList = " + photosList.size());
 		Glide.with(context)
 				.load(photosList.get(i).getSrc())
 				.into(photosViewHolder.albumPhoto);
@@ -67,14 +66,12 @@ public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosLis
 			@Override
 			public void onClick(View v) {
 				onPhotoClick.onPhotoClick(photosList.get(i).getOwnerId(), photosList.get(i).getAid(), photosList.get(i).getPid(), i);
-				Toast.makeText(context, "photo", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
 
 	@Override
 	public int getItemCount() {
-		Log.d("Log", "photosList.size() = " + photosList.size());
 		return photosList.size();
 	}
 }

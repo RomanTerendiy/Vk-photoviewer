@@ -1,6 +1,5 @@
 package com.inverita.testapp.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.R;
 import com.inverita.testapp.model.Album;
 import com.inverita.testapp.model.AlbumsList;
 import com.inverita.testapp.retrofitInterface.VkServiceInterface;
+import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.view.adapter.AlbumsListRecycleViewAdapter;
 
 import java.util.List;

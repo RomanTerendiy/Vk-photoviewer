@@ -64,7 +64,6 @@ public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsLis
 	@Override
 	public void onBindViewHolder(AlbumsListRecycleViewAdapter.AlbumsViewHolder albumsViewHolder, final int i) {
 		albumsViewHolder.albumName.setText(albumsList.get(i).getTitle());
-		Log.d("Log", "albumsList = " + albumsList.get(i).getThumbSrc());
 		Glide.with(context)
 				.load(albumsList.get(i).getThumbSrc())
 				.into(albumsViewHolder.albumCover);
@@ -72,7 +71,6 @@ public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsLis
 			@Override
 			public void onClick(View v) {
 				onAlbumClick.onAlbumClick(albumsList.get(i).getAid());
-				Toast.makeText(context, "photos list", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

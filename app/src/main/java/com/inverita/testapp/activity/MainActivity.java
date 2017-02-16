@@ -20,16 +20,14 @@ public class MainActivity extends AppCompatActivity {
 		getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_gradient));
 		EventBus.getDefault().register(this);
 		RegistrationFragment registrationFragment = new RegistrationFragment();
-		getSupportFragmentManager().beginTransaction().add(R.id.activity_main, registrationFragment, "")
-				.addToBackStack("RegistrationFragment").commit();
+		getSupportFragmentManager().beginTransaction().add(R.id.activity_main, registrationFragment, "").commit();
 	}
 
 	@Subscribe
 	public void onEvent(CustomMessageEvent event) {
 		if (event.hasToken()) {
 			FriendsListFragment friendsListFragment = new FriendsListFragment();
-			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, friendsListFragment, "")
-					.addToBackStack("FriendsListFragment").commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, friendsListFragment, "").commit();
 		}
 	}
 }

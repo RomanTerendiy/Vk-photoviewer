@@ -57,6 +57,7 @@ public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosLis
 	public void onBindViewHolder(PhotosListRecycleViewAdapter.PhotosViewHolder photosViewHolder, final int i) {
 		Glide.with(context)
 				.load(photosList.get(i).getSrc())
+				.placeholder(R.mipmap.instagram_icon)
 				.into(photosViewHolder.albumPhoto);
 		photosViewHolder.gridLayout.setOnClickListener(new View.OnClickListener() {
 			@Override

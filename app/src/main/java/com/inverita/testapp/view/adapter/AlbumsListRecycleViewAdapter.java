@@ -38,7 +38,7 @@ public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsLis
 
 		AlbumsViewHolder(View itemView) {
 			super(itemView);
-			gridLayout = (GridLayout) itemView.findViewById(R.id.albums_list_id);
+			gridLayout = (GridLayout) itemView.findViewById(R.id.albums_list_grid);
 			albumName = (TextView) itemView.findViewById(R.id.album_name);
 			albumCover = (ImageView) itemView.findViewById(R.id.album_cover);
 		}
@@ -61,6 +61,7 @@ public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsLis
 		albumsViewHolder.albumName.setText(albumsList.get(i).getTitle());
 		Glide.with(context)
 				.load(albumsList.get(i).getThumbSrc())
+				.placeholder(R.mipmap.instagram_icon)
 				.into(albumsViewHolder.albumCover);
 		albumsViewHolder.gridLayout.setOnClickListener(new View.OnClickListener() {
 			@Override

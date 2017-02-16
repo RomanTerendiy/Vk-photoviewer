@@ -15,6 +15,8 @@ import com.inverita.testapp.model.Friend;
 
 import java.util.List;
 
+import static java.lang.System.load;
+
 public class FriendsListRecycleViewAdapter extends RecyclerView.Adapter<FriendsListRecycleViewAdapter.PersonViewHolder> {
 
 	private Context context;

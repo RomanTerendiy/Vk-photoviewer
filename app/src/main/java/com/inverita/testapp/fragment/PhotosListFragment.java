@@ -25,7 +25,7 @@ import retrofit2.Response;
 
 public class PhotosListFragment extends Fragment implements PhotosListRecycleViewAdapter.OnPhotoClick {
 
-	private int NUMBER_OF_COLUMNS = 2;
+	private int NUMBER_OF_COLUMNS = 3;
 	private RecyclerView recyclerView;
 	private List<Photo> photos;
 	private VkServiceInterface vkServiceInterface;
@@ -39,8 +39,7 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 		int landscapeOrientation = Configuration.ORIENTATION_LANDSCAPE;
 		if (currentOrientation == landscapeOrientation) {
 			FriendsListFragment friendsListFragment = new FriendsListFragment();
-			getFragmentManager().beginTransaction().replace(R.id.albums_navigation_friend_list, friendsListFragment, "")
-					.addToBackStack("FriendsListFragment").commit();
+			getFragmentManager().beginTransaction().replace(R.id.albums_navigation_friend_list, friendsListFragment, "").commit();
 		}
 		Bundle bundle = getArguments();
 		albumId = bundle.getInt("albumId");

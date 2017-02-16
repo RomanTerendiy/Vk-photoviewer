@@ -39,7 +39,8 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 		int landscapeOrientation = Configuration.ORIENTATION_LANDSCAPE;
 		if (currentOrientation == landscapeOrientation) {
 			FriendsListFragment friendsListFragment = new FriendsListFragment();
-			getFragmentManager().beginTransaction().replace(R.id.navigation_friend_list, friendsListFragment, "").commit();
+			getFragmentManager().beginTransaction().replace(R.id.albums_navigation_friend_list, friendsListFragment, "")
+					.addToBackStack("FriendsListFragment").commit();
 		}
 		Bundle bundle = getArguments();
 		albumId = bundle.getInt("albumId");
@@ -84,4 +85,6 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 		getFragmentManager().beginTransaction().replace(R.id.activity_main, photoFragment, "")
 				.addToBackStack("PhotoFragment").commit();
 	}
+
+
 }

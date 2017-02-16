@@ -5,7 +5,7 @@
     android:orientation="horizontal">
 
     <FrameLayout
-        android:id="@+id/navigation_friend_list"
+        android:id="@+id/albums_navigation_friend_list"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />

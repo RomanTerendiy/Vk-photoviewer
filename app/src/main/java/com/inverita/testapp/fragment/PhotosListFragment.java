@@ -1,5 +1,6 @@
 package com.inverita.testapp.fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,17 +29,22 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 	private RecyclerView recyclerView;
 	private List<Photo> photos;
 	private VkServiceInterface vkServiceInterface;
-	private Integer albumId;
-	private Integer friendId;
+	private int albumId;
+	private int friendId;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View layout = inflater.inflate(R.layout.recycler_view, container, false);
+		View layout = inflater.inflate(R.layout.photos_list_fragment, container, false);
+		int currentOrientation = getActivity().getResources().getConfiguration().orientation;
+		int landscapeOrientation = Configuration.ORIENTATION_LANDSCAPE;
+		if (currentOrientation == landscapeOrientation) {
+			FriendsListFragment friendsListFragment = new FriendsListFragment();
+			getFragmentManager().beginTransaction().replace(R.id.navigation_friend_list, friendsListFragment, "").commit();
+		}
 		Bundle bundle = getArguments();
-		Log.d("Log", "bundle = " + bundle.getInt("albumId"));
 		albumId = bundle.getInt("albumId");
 		friendId = bundle.getInt("friendId");
-		recyclerView = (RecyclerView) layout.findViewById(R.id.recycler_view_id);
+		recyclerView = (RecyclerView) layout.findViewById(R.id.photos_recycler_view);
 		recyclerView.setLayoutManager(new GridLayoutManager(getContext(), NUMBER_OF_COLUMNS));
 		recyclerView.setHasFixedSize(true);
 		getFriendsPhotos();
@@ -47,14 +53,12 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 
 	private void getFriendsPhotos() {
 		vkServiceInterface = ApiClient.getClient().create(VkServiceInterface.class);
-		Log.d("Log", "vkService = " + friendId + "   album = " + albumId);
 		final Call<PhotosList> callAlbumsId = vkServiceInterface.getPhotos(friendId, albumId);
 		callAlbumsId.enqueue(new Callback<PhotosList>() {
 			@Override
 			public void onResponse(Call<PhotosList> call, Response<PhotosList> photosListResponse) {
 				PhotosList photosList = new PhotosList();
 				photos = photosListResponse.body().getResponse();
-				Log.d("Log", "PHOTOS = " + photos.size());
 				photosList.setResponse(photos);
 				PhotosListRecycleViewAdapter adapter = new PhotosListRecycleViewAdapter(getActivity(), photos, PhotosListFragment.this);
 				adapter.notifyDataSetChanged();
@@ -63,7 +67,7 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 
 			@Override
 			public void onFailure(Call<PhotosList> call, Throwable t) {
-				Log.d("Log", "failed to get friendsListId");
+				Log.d("error", "failed to get friendsListId");
 			}
 		});
 	}

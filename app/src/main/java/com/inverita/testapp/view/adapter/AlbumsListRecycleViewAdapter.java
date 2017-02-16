@@ -51,7 +51,7 @@ public class AlbumsListRecycleViewAdapter extends RecyclerView.Adapter<AlbumsLis
 
 	@Override
 	public AlbumsListRecycleViewAdapter.AlbumsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.albums_list_view, viewGroup, false);
+		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.albums_list_item, viewGroup, false);
 		AlbumsViewHolder albumsViewHolder = new AlbumsViewHolder(v);
 		return albumsViewHolder;
 	}

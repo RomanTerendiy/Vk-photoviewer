@@ -37,7 +37,7 @@ public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosLis
 		PhotosViewHolder(View itemView) {
 			super(itemView);
 			gridLayout = (GridLayout) itemView.findViewById(R.id.photos_list_id);
-			albumPhoto = (ImageView) itemView.findViewById(R.id.album_photo_id);
+			albumPhoto = (ImageView) itemView.findViewById(R.id.album_photos);
 		}
 	}
 
@@ -48,7 +48,7 @@ public class PhotosListRecycleViewAdapter extends RecyclerView.Adapter<PhotosLis
 
 	@Override
 	public PhotosListRecycleViewAdapter.PhotosViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.photos_list_view, viewGroup, false);
+		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.photos_list_item, viewGroup, false);
 		PhotosListRecycleViewAdapter.PhotosViewHolder pvh = new PhotosListRecycleViewAdapter.PhotosViewHolder(v);
 		return pvh;
 	}

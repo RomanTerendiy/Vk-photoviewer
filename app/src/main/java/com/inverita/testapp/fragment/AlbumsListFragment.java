@@ -1,5 +1,6 @@
 package com.inverita.testapp.fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -33,10 +34,16 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View layout = inflater.inflate(R.layout.recycler_view, container, false);
+		View layout = inflater.inflate(R.layout.albums_list_fragment, container, false);
+		int currentOrientation = getActivity().getResources().getConfiguration().orientation;
+		int landscapeOrientation = Configuration.ORIENTATION_LANDSCAPE;
+		if (currentOrientation == landscapeOrientation) {
+			FriendsListFragment friendsListFragment = new FriendsListFragment();
+			getFragmentManager().beginTransaction().replace(R.id.navigation_friend_list, friendsListFragment, "").commit();
+		}
 		Bundle bundle = getArguments();
 		friendId = bundle.getInt("friendId");
-		recyclerView = (RecyclerView) layout.findViewById(R.id.recycler_view_id);
+		recyclerView = (RecyclerView) layout.findViewById(R.id.albums_recycler_view);
 		recyclerView.setLayoutManager(new GridLayoutManager(getContext(), NUMBER_OF_COLUMNS));
 		recyclerView.setHasFixedSize(true);
 		getFriendsAlbums();
@@ -55,14 +62,14 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 				AlbumsListRecycleViewAdapter adapter = new AlbumsListRecycleViewAdapter(getActivity(), albums, AlbumsListFragment.this);
 				adapter.notifyDataSetChanged();
 				recyclerView.setAdapter(adapter);
-				if (albums.size() == 0) {
+				if (albums.size() == 0 && albums == null) {
 					Toast.makeText(getActivity(), "albums list is empty", Toast.LENGTH_SHORT).show();
 				}
 			}
 
 			@Override
 			public void onFailure(Call<AlbumsList> call, Throwable t) {
-				Log.d("Log", "failed to get friendsListId");
+				Log.d("error", "failed to get friends albums");
 			}
 		});
 	}

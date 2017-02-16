@@ -23,7 +23,6 @@ public class PhotoAdapter extends PagerAdapter {
 
 	public interface SharePhoto {
 		void sharePhoto(int position);
-
 		void displayToolbar();
 	}
 
@@ -46,7 +45,7 @@ public class PhotoAdapter extends PagerAdapter {
 
 	@Override
 	public Object instantiateItem(final ViewGroup container, int position) {
-		View itemView = mLayoutInflater.inflate(R.layout.photo_layout, container, false);
+		View itemView = mLayoutInflater.inflate(R.layout.photo_item, container, false);
 		ImageView imageView = (ImageView) itemView.findViewById(R.id.photo_id);
 		Glide.with(mContext)
 				.load(photos.get(position).getSrc())

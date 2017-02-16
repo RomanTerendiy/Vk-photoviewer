@@ -21,7 +21,7 @@ import com.inverita.testapp.event.CustomMessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class WebViewFragment extends Fragment {
+public class RegistrationFragment extends Fragment {
 
 	private final String defaultUrl = "https://oauth.vk.com/authorize?client_id=5826840&display=page&redirect_uri=" +
 			"https://oauth.vk.com/blank.html/callback&scope=friends&response_type=token&v=5.62&state=123456";
@@ -34,7 +34,6 @@ public class WebViewFragment extends Fragment {
 	private String expiresIn;
 	private String userId;
 	private SharedPreferences sPref;
-	private WebView mWebView;
 	private CustomMessageEvent event;
 
 	@Override
@@ -61,8 +60,8 @@ public class WebViewFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container,
 							 Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.web_view, container, false);
-		mWebView = (WebView) view.findViewById(R.id.web_view_id);
+		View view = inflater.inflate(R.layout.registration_fragment, container, false);
+		WebView mWebView = (WebView) view.findViewById(R.id.registration);
 		mWebView.loadUrl(defaultUrl);
 		mWebView.setWebViewClient(new WebViewClient() {
 
@@ -102,12 +101,11 @@ public class WebViewFragment extends Fragment {
 					sPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sPref.edit();
 					editor.putString("TokenKey", token);
-					Log.d("log", "my  token = " + token);
 					editor.putString("ExpiresInKey", expiresIn);
 					editor.putString("UserIdKey", userId);
 					editor.apply();
 				} else {
-					Log.d("log", "token is not writen to editor");
+					Log.d("log", "token is not written to editor");
 				}
 			}
 		});

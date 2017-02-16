@@ -23,7 +23,7 @@ public interface VkServiceInterface {
 	Call<PhotosList> getPhotos(@Query("owner_id") int friendId, @Query("album_id") int albumId);
 
 	//https://api.vk.com/method/photos.get?owner_id=14025113&album_id=167457024&photo_ids=293666120&v=5.62
-	@GET("method/photos.get?")
-	Call<PhotosList> getPhoto(@Query("owner_id") int friendId, @Query("album_id") int albumId, @Query("photo_ids") int photoId);
+//	@GET("method/photos.get?")
+//	Call<PhotosList> getPhoto(@Query("owner_id") int friendId, @Query("album_id") int albumId, @Query("photo_ids") int photoId);
 
 }

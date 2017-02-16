@@ -39,7 +39,7 @@ public class FriendsListRecycleViewAdapter extends RecyclerView.Adapter<FriendsL
 
 		PersonViewHolder(View itemView) {
 			super(itemView);
-			cardView = (CardView) itemView.findViewById(R.id.friends_list_view_id);
+			cardView = (CardView) itemView.findViewById(R.id.friends_list_card_view);
 			friendsName = (TextView) itemView.findViewById(R.id.friends_name);
 			friendsLastName = (TextView) itemView.findViewById(R.id.friends_last_name);
 			friendsPhoto = (ImageView) itemView.findViewById(R.id.friends_photo);
@@ -53,7 +53,7 @@ public class FriendsListRecycleViewAdapter extends RecyclerView.Adapter<FriendsL
 
 	@Override
 	public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.friends_list_view, viewGroup, false);
+		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.friends_list_item, viewGroup, false);
 		PersonViewHolder pvh = new PersonViewHolder(v);
 		return pvh;
 	}

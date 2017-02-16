@@ -30,8 +30,8 @@ public class FriendsListFragment extends Fragment implements FriendsListRecycleV
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View layout = inflater.inflate(R.layout.recycler_view, container, false);
-		recyclerView = (RecyclerView) layout.findViewById(R.id.recycler_view_id);
+		View layout = inflater.inflate(R.layout.friends_list_fragment, container, false);
+		recyclerView = (RecyclerView) layout.findViewById(R.id.friend_list_recycler_view);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		recyclerView.setHasFixedSize(true);
 		getMyFriends();
@@ -61,7 +61,6 @@ public class FriendsListFragment extends Fragment implements FriendsListRecycleV
 
 	@Override
 	public void onFriendClick(int id) {
-		Log.d("Log", "onFriendClick");
 		AlbumsListFragment albumListFragment = new AlbumsListFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("friendId", id);

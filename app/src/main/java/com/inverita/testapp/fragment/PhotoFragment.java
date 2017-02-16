@@ -38,12 +38,17 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 	private int photoId;
 	private int position;
 	private int photoPosition;
-	private PhotoFragment photoFragment;
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.sharing_menu, menu);
 		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		sharePhoto();
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void sharePhoto() {
@@ -59,21 +64,15 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		sharePhoto();
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View layout = inflater.inflate(R.layout.photo_view, container, false);
+		View layout = inflater.inflate(R.layout.photo_fragment, container, false);
 		setHasOptionsMenu(true);
 		Bundle bundle = getArguments();
 		friendId = bundle.getInt("friendId");
 		albumId = bundle.getInt("albumId");
 		photoId = bundle.getInt("photoId");
 		position = bundle.getInt("position");
-		viewPager = (ViewPager) layout.findViewById(R.id.pager);
+		viewPager = (ViewPager) layout.findViewById(R.id.photo_view_pager);
 		getFriendsPhoto();
 		return layout;
 	}
@@ -95,7 +94,7 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 
 			@Override
 			public void onFailure(Call<PhotosList> call, Throwable t) {
-				Log.d("Log", "failed to get friendsListId");
+				Log.d("error", "failed to get friendsListId");
 			}
 		});
 	}

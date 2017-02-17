@@ -24,8 +24,8 @@ import org.greenrobot.eventbus.EventBus;
 public class RegistrationFragment extends Fragment {
 
 	private final String defaultUrl = "https://oauth.vk.com/authorize?client_id=5826840&display=page&redirect_uri=" +
-			"https://oauth.vk.com/blank.html/callback&scope=friends&response_type=token&v=5.62&state=123456";
-	private static final String ARG_REDIRECT_URL = "token";
+			"https://oauth.vk.com/blank.html/callback&scope=friends,photos&response_type=token&v=5.62&state=123456";
+	private static final String ARG_REDIRECT_URL = "redirectUrl";
 	private static final String ARG_TOKEN = "token";
 	private static final String ARG_EXPIRES_IN = "expiresIn";
 	private static final String ARG_USER_ID = "userId";
@@ -102,7 +102,7 @@ public class RegistrationFragment extends Fragment {
 					SharedPreferences.Editor editor = sPref.edit();
 					editor.putString("TokenKey", token);
 					editor.putString("ExpiresInKey", expiresIn);
-					editor.putString("UserIdKey", userId);
+					editor.putInt("UserIdKey", Integer.parseInt(userId));
 					editor.apply();
 				} else {
 					Log.d("log", "token is not written to editor");

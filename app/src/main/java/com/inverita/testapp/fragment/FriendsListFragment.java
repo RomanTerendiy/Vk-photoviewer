@@ -1,5 +1,7 @@
 package com.inverita.testapp.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,15 +24,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.R.attr.defaultValue;
+
 public class FriendsListFragment extends Fragment implements FriendsListRecycleViewAdapter.OnFriendClick {
 
 	private RecyclerView recyclerView;
 	private List<Friend> friends;
 	private VkServiceInterface vkServiceInterface;
+	SharedPreferences sharedPreferences;
+	int id;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View layout = inflater.inflate(R.layout.friends_list_fragment, container, false);
+
+		sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+		id = sharedPreferences.getInt("UserIdKey", defaultValue);
+
 		recyclerView = (RecyclerView) layout.findViewById(R.id.friend_list_recycler_view);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		recyclerView.setHasFixedSize(true);
@@ -40,7 +50,7 @@ public class FriendsListFragment extends Fragment implements FriendsListRecycleV
 
 	private void getMyFriends() {
 		vkServiceInterface = ApiClient.getClient().create(VkServiceInterface.class);
-		final Call<FriendsList> callFriendsId = vkServiceInterface.getFriends();
+		final Call<FriendsList> callFriendsId = vkServiceInterface.getFriends(id, 50, "photo_50"); //59034633
 		callFriendsId.enqueue(new Callback<FriendsList>() {
 			@Override
 			public void onResponse(Call<FriendsList> call, Response<FriendsList> friendsListResponse) {
@@ -54,7 +64,7 @@ public class FriendsListFragment extends Fragment implements FriendsListRecycleV
 
 			@Override
 			public void onFailure(Call<FriendsList> call, Throwable t) {
-				Log.d("Log", "failed to get friendsListId");
+				Log.d("log", "failed to get friendsListId");
 			}
 		});
 	}

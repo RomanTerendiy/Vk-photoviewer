@@ -1,5 +1,7 @@
 package com.inverita.testapp.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,10 +33,16 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 	private VkServiceInterface vkServiceInterface;
 	private List<Album> albums;
 	private int friendId;
+	private String token;
+	SharedPreferences sharedPreferences;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View layout = inflater.inflate(R.layout.albums_list_fragment, container, false);
+
+		sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+		token = sharedPreferences.getString("TokenKey", "");
+
 		int currentOrientation = getActivity().getResources().getConfiguration().orientation;
 		int landscapeOrientation = Configuration.ORIENTATION_LANDSCAPE;
 		if (currentOrientation == landscapeOrientation) {
@@ -52,7 +60,7 @@ public class AlbumsListFragment extends Fragment implements AlbumsListRecycleVie
 
 	private void getFriendsAlbums() {
 		vkServiceInterface = ApiClient.getClient().create(VkServiceInterface.class);
-		Call<AlbumsList> callAlbums = vkServiceInterface.getAlbums(friendId);
+		Call<AlbumsList> callAlbums = vkServiceInterface.getAlbums(friendId, token);
 		callAlbums.enqueue(new Callback<AlbumsList>() {
 			@Override
 			public void onResponse(Call<AlbumsList> call, Response<AlbumsList> albumsListResponse) {

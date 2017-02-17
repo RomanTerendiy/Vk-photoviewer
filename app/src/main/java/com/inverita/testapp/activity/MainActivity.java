@@ -2,6 +2,7 @@ package com.inverita.testapp.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.inverita.testapp.R;
 import com.inverita.testapp.event.CustomMessageEvent;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 		if (event.hasToken()) {
 			FriendsListFragment friendsListFragment = new FriendsListFragment();
 			getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, friendsListFragment, "").commit();
+		} else {
+			Toast.makeText(this, "login failed, try again", Toast.LENGTH_LONG).show();
 		}
 	}
 }

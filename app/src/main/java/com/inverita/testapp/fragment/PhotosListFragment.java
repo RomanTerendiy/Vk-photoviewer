@@ -1,5 +1,7 @@
 package com.inverita.testapp.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import com.inverita.testapp.retrofitInterface.VkServiceInterface;
 import com.inverita.testapp.util.ApiClient;
 import com.inverita.testapp.view.adapter.PhotosListRecycleViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,10 +30,12 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 
 	private int NUMBER_OF_COLUMNS = 3;
 	private RecyclerView recyclerView;
-	private List<Photo> photos;
+	private List<Photo> photos = new ArrayList<>(0);
 	private VkServiceInterface vkServiceInterface;
 	private int albumId;
 	private int friendId;
+	private String token;
+	SharedPreferences sharedPreferences;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +49,10 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 		Bundle bundle = getArguments();
 		albumId = bundle.getInt("albumId");
 		friendId = bundle.getInt("friendId");
+
+		sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+		token = sharedPreferences.getString("TokenKey", "");
+
 		recyclerView = (RecyclerView) layout.findViewById(R.id.photos_recycler_view);
 		recyclerView.setLayoutManager(new GridLayoutManager(getContext(), NUMBER_OF_COLUMNS));
 		recyclerView.setHasFixedSize(true);
@@ -53,7 +62,7 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 
 	private void getFriendsPhotos() {
 		vkServiceInterface = ApiClient.getClient().create(VkServiceInterface.class);
-		final Call<PhotosList> callAlbumsId = vkServiceInterface.getPhotos(friendId, albumId);
+		final Call<PhotosList> callAlbumsId = vkServiceInterface.getPhotos(friendId, albumId, token);
 		callAlbumsId.enqueue(new Callback<PhotosList>() {
 			@Override
 			public void onResponse(Call<PhotosList> call, Response<PhotosList> photosListResponse) {
@@ -61,8 +70,8 @@ public class PhotosListFragment extends Fragment implements PhotosListRecycleVie
 				photos = photosListResponse.body().getResponse();
 				photosList.setResponse(photos);
 				PhotosListRecycleViewAdapter adapter = new PhotosListRecycleViewAdapter(getActivity(), photos, PhotosListFragment.this);
-				adapter.notifyDataSetChanged();
 				recyclerView.setAdapter(adapter);
+				adapter.notifyDataSetChanged(); //change to all
 			}
 
 			@Override

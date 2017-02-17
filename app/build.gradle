@@ -25,8 +25,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.+'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4' //json to pojo converter
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile 'com.github.bumptech.glide:glide:3.5.2' //for photo_layout upload
-    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:support-v4:25.0.0' //adds logs for retrofit
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

@@ -1,6 +1,8 @@
 package com.inverita.testapp.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,6 +40,9 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 	private int photoId;
 	private int position;
 	private int photoPosition;
+	private String token;
+	SharedPreferences sharedPreferences;
+
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -72,6 +77,10 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 		albumId = bundle.getInt("albumId");
 		photoId = bundle.getInt("photoId");
 		position = bundle.getInt("position");
+
+		sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+		token = sharedPreferences.getString("TokenKey", "");
+
 		viewPager = (ViewPager) layout.findViewById(R.id.photo_view_pager);
 		getFriendsPhoto();
 		return layout;
@@ -79,7 +88,7 @@ public class PhotoFragment extends Fragment implements PhotoAdapter.SharePhoto {
 
 	private void getFriendsPhoto() {
 		vkServiceInterface = ApiClient.getClient().create(VkServiceInterface.class);
-		final Call<PhotosList> callPhotos = vkServiceInterface.getPhotos(friendId, albumId);
+		final Call<PhotosList> callPhotos = vkServiceInterface.getPhotos(friendId, albumId, token);
 		callPhotos.enqueue(new Callback<PhotosList>() {
 			@Override
 			public void onResponse(Call<PhotosList> call, Response<PhotosList> friendsListResponse) {
